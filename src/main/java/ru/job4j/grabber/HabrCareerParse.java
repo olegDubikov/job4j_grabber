@@ -7,7 +7,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.List;
 
 public class HabrCareerParse {
 
@@ -23,7 +22,7 @@ public class HabrCareerParse {
             Connection connection = Jsoup.connect(fullLink);
             Document document = connection.get();
             Elements rows = document.select(".vacancy-card__inner");
-            rows.forEach(row -> {
+            for (Element row : rows) {
                 Element titleElement = row.select(".vacancy-card__title").first();
                 Element linkElement = titleElement.child(0);
                 Element dataTime = row.select(".vacancy-card__date").first();
@@ -31,9 +30,19 @@ public class HabrCareerParse {
                 String vacancyName = titleElement.text();
                 String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
                 String data = dataElement.attr("datetime");
-                System.out.printf("%s %s %s%n", data, vacancyName, link);
-            });
+                HabrCareerParse habrCareerParse = new HabrCareerParse();
+                System.out.printf("%s %s %s%n %s",
+                        data, vacancyName, link, habrCareerParse.retrieveDescription(link));
+            }
             pageNumber++;
         }
+    }
+
+    private String retrieveDescription(String link) throws IOException {
+        Connection connection = Jsoup.connect(link);
+        Document document = connection.get();
+        Elements rows = document.select(".faded-content__body");
+        Element description = rows.select(".vacancy-description__text").first();
+        return description.text();
     }
 }
