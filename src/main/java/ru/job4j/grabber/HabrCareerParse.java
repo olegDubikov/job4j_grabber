@@ -31,7 +31,7 @@ public class HabrCareerParse {
                 String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
                 String data = dataElement.attr("datetime");
                 HabrCareerParse habrCareerParse = new HabrCareerParse();
-                System.out.printf("%s %s %s%n %s",
+                System.out.printf("%s %s %s%n %s%n",
                         data, vacancyName, link, habrCareerParse.retrieveDescription(link));
             }
             pageNumber++;
