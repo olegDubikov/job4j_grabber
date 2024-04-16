@@ -79,8 +79,8 @@ public class Post {
     public String toString() {
         return "Post{" + "id=" + id
                 + ", title='" + title + '\''
-                + ", link='" + link + '\''
                 + ", description='" + description + '\''
+                + ", link='" + link + '\''
                 + ", created=" + created + '}';
     }
 }
