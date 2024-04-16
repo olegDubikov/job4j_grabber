@@ -108,10 +108,8 @@ public class PsqlStore implements Store {
             e.printStackTrace();
         }
         PsqlStore store = new PsqlStore(config);
-        Post post1 = new Post(1, "java", "desc1", "http://one.ru"
-                , LocalDateTime.now());
-        Post post2 = new Post(2, "java+", "desc2", "http://two.ru"
-                , LocalDateTime.now());
+        Post post1 = new Post(1, "java", "desc1", "http://one.ru", LocalDateTime.now());
+        Post post2 = new Post(2, "java+", "desc2", "http://two.ru", LocalDateTime.now());
         store.save(post1);
         store.save(post2);
 
