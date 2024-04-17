@@ -30,15 +30,18 @@ public class PsqlStore implements Store {
     public void save(Post post) {
         try (PreparedStatement statement =
                      connection.prepareStatement(
-                             "INSERT INTO post(id, name, text, link, created) "
-                                     + "VALUES(?, ?, ?, ?, ?) "
-                                     + "ON CONFLICT (link) DO NOTHING")) {
-            statement.setInt(1, post.getId());
-            statement.setString(2, post.getTitle());
-            statement.setString(3, post.getDescription());
-            statement.setString(4, post.getLink());
-            statement.setTimestamp(5, Timestamp.valueOf(post.getCreated()));
-            statement.execute();
+                             "INSERT INTO post(name, text, link, created) "
+                                     + "VALUES(?, ?, ?, ?) "
+                                     + "ON CONFLICT (link) DO NOTHING", Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, post.getTitle());
+            statement.setString(2, post.getDescription());
+            statement.setString(3, post.getLink());
+            statement.setTimestamp(4, Timestamp.valueOf(post.getCreated()));
+            statement.executeUpdate();
+            ResultSet generateId = statement.getGeneratedKeys();
+            if (generateId.next()) {
+                post.setId(generateId.getInt(1));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -116,6 +119,6 @@ public class PsqlStore implements Store {
         List<Post> post = store.getAll();
         post.forEach(System.out::println);
 
-        System.out.println(store.findById(2));
+        System.out.println(store.findById(post2.getId()));
     }
 }
