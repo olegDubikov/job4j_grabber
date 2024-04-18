@@ -101,24 +101,4 @@ public class PsqlStore implements Store {
             connection.close();
         }
     }
-
-    public static void main(String[] args) {
-        Properties config = new Properties();
-        try (InputStream input = PsqlStore.class.getClassLoader()
-                .getResourceAsStream("post.properties")) {
-            config.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        PsqlStore store = new PsqlStore(config);
-        Post post1 = new Post(1, "java", "desc1", "http://one.ru", LocalDateTime.now());
-        Post post2 = new Post(2, "java+", "desc2", "http://two.ru", LocalDateTime.now());
-        store.save(post1);
-        store.save(post2);
-
-        List<Post> post = store.getAll();
-        post.forEach(System.out::println);
-
-        System.out.println(store.findById(post2.getId()));
-    }
 }
