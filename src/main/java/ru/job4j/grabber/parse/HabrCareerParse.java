@@ -44,7 +44,7 @@ public class HabrCareerParse implements Parse {
                     String data = dataElement.attr("datetime");
                     String description = retrieveDescription(postLink);
                     LocalDateTime created = dateTimeParser.parse(data);
-                    posts.add(new Post(0, vacancyName, postLink, description, created));
+                    posts.add(new Post(0, vacancyName, description, postLink, created));
                 }
                 pageNumber++;
             } catch (IOException e) {

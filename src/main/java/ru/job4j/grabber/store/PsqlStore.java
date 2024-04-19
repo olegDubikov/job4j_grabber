@@ -2,8 +2,6 @@ package ru.job4j.grabber.store;
 
 import ru.job4j.grabber.parse.Post;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
